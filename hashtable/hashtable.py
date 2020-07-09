@@ -20,8 +20,10 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
+    def __init__(self, capacity=MIN_CAPACITY):
         # Your code here
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
     def get_num_slots(self):
@@ -35,6 +37,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return self.capacity
 
 
     def get_load_factor(self):
@@ -43,7 +46,9 @@ class HashTable:
 
         Implement this.
         """
+        # Load Factor = Total number of items stored / Size of the array
         # Your code here
+        # return 
 
 
     def fnv1(self, key):
@@ -63,6 +68,11 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        utf_key = key.encode()
+        h = 5381
+        for c in utf_key:
+            h = ((h*33) + c) % self.capacity
+        return h
 
 
     def hash_index(self, key):
@@ -82,6 +92,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        
 
 
     def delete(self, key):
