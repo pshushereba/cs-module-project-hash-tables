@@ -68,11 +68,16 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
-        utf_key = key.encode()
-        h = 5381
-        for c in utf_key:
-            h = ((h*33) + c) % self.capacity
-        return h
+        # utf_key = ord(key)
+        # h = 5381
+        # for c in utf_key:
+        #     h = ((h*33) + c) % self.capacity
+        # return h
+        hash = 5381
+        for char in key:
+            hash = ((hash << 5) + hash) + ord(char)
+
+        return hash
 
 
     def hash_index(self, key):
@@ -92,7 +97,26 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        hashed_key = self.djb2(key)
+        idx = hashed_key % self.capacity
+
+        if self.storage[idx] is None:
+            # If there is nothing at the index, create a new entry.
+            self.storage[idx] = HashTableEntry(key, value)
+        else:
+            list_node = self.storage[idx]
+
+            while list_node:
+                if list_node.key == key:
+                    list_node.value = value
+                    return
+                elif list_node.next:
+                    list_node = list_node.next
+                else:
+                    list_node.next = HashTableEntry(key, value)
+                    return
         
+        # self.storage[idx] = value
 
 
     def delete(self, key):
