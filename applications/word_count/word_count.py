@@ -1,6 +1,21 @@
-def word_count(s):
-    # Your code here
+punctuation = (":", ";", ",", ".", "-", "+", "=", "/", "\\", "|", "[", "]", "{", "}", "(", ")", "*", "^", "&", "\"")
 
+def word_count(s):
+    counts = {}
+
+    for char in punctuation:
+        s = s.replace(char, "")
+    s = s.lower().split()
+
+    if len(s) == 1 and s[0] == "":
+        return {}
+    
+    for word in s:
+        if word in counts:
+            counts[word.lower()] += 1
+        else:
+            counts[word.lower()] = 1
+    return counts 
 
 
 if __name__ == "__main__":

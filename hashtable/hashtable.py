@@ -136,6 +136,7 @@ class HashTable:
         # Your code here
         # Find the index
         idx = self.hash_index(key)
+        # Node is what we're pointing at (the current node), prev is the node that comes in the list prior to node.
         node = self.storage[idx]
         prev = None
         # Iterate to the requested node
@@ -154,7 +155,7 @@ class HashTable:
             if prev is None:
                 self.storage[idx] = node.next 
             else:
-                prev.next = prev.next.next
+                prev.next = node.next
             # return the deleted item
             return result
 
@@ -190,6 +191,20 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # Store a reference to the current hash table
+        current_table = self.storage
+        # Store the current capacity
+        current_capacity = self.capacity
+        # Update the capacity to new_capacity
+        self.capacity = new_capacity
+        # Create a new list of size new_capacity
+        self.storage = [None] * new_capacity
+
+        for node in current_table:
+            while node is not None:
+                self.put(node.key, node.value)
+                node = node.next
+        
 
 
 
